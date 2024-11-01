@@ -1,0 +1,65 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Gerät Offline</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+  <style type="text/css"> 
+    :root { --background-color: white; --primary-color: #1C1C1E; }
+    [data-theme="dark"] { --background-color: #121212; --primary-color: #eee; }
+    [data-theme="light"] { --background-color: white; --primary-color: #1C1C1E; }
+    html, body { background-color: var(--background-color) !important; }
+    html, body, button { font-family: Arial, Helvetica, sans-serif; font-size: 18px; }
+    div.container { color: var(--primary-color); position: relative; top: 100px; text-align: center; } 
+    button { padding: 10px 30px; margin: 4px 2px; }
+
+    /* Container für die Lottie-Animation */
+    #lottieAnimation {
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Animation Container -->
+    <div id="lottieAnimation"></div>
+
+    <span id="message">
+      <p>Keine Internet Verbindung :(<br/>Versuch es später erneut</p>
+    </span>
+    <button id="retryButton" type="button" onclick="gonative.webview.reload()">Neu Laden</button>
+  </div>
+  <script>
+    var message = document.getElementById('message');
+    var retryButton = document.getElementById('retryButton');
+    if (['ko', 'ko-kr', 'ko-kp'].indexOf(navigator.language.toLowerCase()) > -1) {
+      // Koreanische Übersetzung
+      message.innerHTML = '<p>인터넷 연결이 끊겼습니다.<br/>연결하고 다시 시도하시길 바랍니다.</p>';
+      retryButton.innerText = '괜찮아';
+    }
+    function updateDarkMode(){
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+      else {
+        document.documentElement.setAttribute("data-theme", "light");
+      } 
+    }
+    updateDarkMode();
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', updateDarkMode);
+    }
+
+    // Lottie-Animation laden
+    var animation = lottie.loadAnimation({
+      container: document.getElementById('lottieAnimation'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://raw.githubusercontent.com/USERNAME/REPOSITORY_NAME/main/404.json' // GitHub URL zur JSON-Datei
+    });
+  </script>
+</body>
+</html>
